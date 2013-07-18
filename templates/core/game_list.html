@@ -16,7 +16,7 @@
     </div>
     <div>
         <h3>Play against the computer.</h3>
-        <a href="{% url create_computer_game %}">Start Game</a>
+        <a href="{% url 'create_computer_game' %}">Start Game</a>
     </div>
 {% endblock %}
 {% block content-related %}
@@ -26,7 +26,7 @@
     {% if games %}
         {% for game in games %}
             <li>
-            vs <a href="{% url view_game game.id %}">
+            vs <a href="{% url 'view_game' game.id %}">
                 {% if user == game.player1 %}
                     {{ game.player2 }}
                 {% else %}

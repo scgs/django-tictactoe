@@ -7,6 +7,8 @@ LOGIN_URL = '/users/login/'
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+HEROKU = os.environ.get('HEROKU')
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -104,6 +106,17 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
+# email settings
+if HEROKU:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.google.com'
+    EMAIL_HOST_USER = 'admin@gilgi.org'
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
@@ -163,3 +176,11 @@ try:
         from local_settings import *
 except:
         pass
+
+if HEROKU:
+    # Parse database configuration from $DATABASE_URL
+    import dj_database_url
+    DATABASES['default'] = dj_database_url.config()
+
+    # Honor the 'X-Forwarded-Proto' header for request.is_secure()
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

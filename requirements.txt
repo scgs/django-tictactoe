@@ -1,7 +1,13 @@
 django
 django-registration
+gunicorn
 gevent
+greenlet
 redis
+South
 simplejson
+psycopg2
+dj-database-url
+distribute
 -e git+git@github.com:sontek/gevent-socketio.git#egg=gevent_socketio
 -e git+git@github.com:abourget/gevent-websocket.git#egg=gevent_websocket
